@@ -1,0 +1,15 @@
+# Railway config. Do not deploy this service yet.
+# When a deploy happens later, Railway runs preDeployCommand before the
+# start command. DATABASE_URL must come from a Postgres service, and the
+# image must include psql. The start command is intentionally omitted
+# until the app exists.
+
+"$schema" = "https://railway.com/railway.schema.json"
+
+[build]
+builder = "RAILPACK"
+
+[deploy]
+preDeployCommand = 'psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f schema.sql'
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
